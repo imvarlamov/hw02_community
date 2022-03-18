@@ -1,3 +1,5 @@
+.idea/
+.flake8
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -144,3 +146,4 @@ dmypy.json
 .history/
 
 .mypy_cache
+
