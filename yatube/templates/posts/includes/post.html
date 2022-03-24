@@ -10,6 +10,7 @@
     </ul>
     <p>{{ post.text }}</p>
     {% if post.group and main_page %}
+    <!-- Как правильно сделать проверку в какую страницу передается пост? -->
       <a href="{% url 'posts:group_list' post.group.slug %}">все записи группы</a>
     {% endif %}
   </article>
