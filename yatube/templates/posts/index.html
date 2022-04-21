@@ -6,7 +6,7 @@
 
 {% block content %}
   <h1>Последние обновления на сайте</h1>
-  {% for post in posts %}
+  {% for post in page_obj %}
     <article>
       <ul>
         <li>
@@ -18,7 +18,6 @@
       </ul>
       <p>{{ post.text }}</p>
       {% if post.group %}
-      <!-- Как правильно сделать проверку в какую страницу передается пост? -->
         <a href="{% url 'posts:group_list' post.group.slug %}">все записи группы</a>
       {% endif %}
     </article>
@@ -26,4 +25,7 @@
       <hr>
     {% endif %}
   {% endfor %}
+
+  {% include 'posts/includes/paginator.html' %}
+
 {% endblock %}
