@@ -6,11 +6,15 @@ from .models import Post, Group, User
 from .forms import PostForm
 
 
-def index(request):
-    post_list = Post.objects.all().order_by('-pub_date')
+def paginate_page(request, post_list):
     paginator = Paginator(post_list, 10)
     page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
+    return paginator.get_page(page_number)
+
+
+def index(request):
+    post_list = Post.objects.all().order_by('-pub_date')
+    page_obj = paginate_page(request, post_list)
     context = {
         'page_obj': page_obj,
     }
@@ -19,10 +23,8 @@ def index(request):
 
 def group_posts(request, slug):
     group = get_object_or_404(Group, slug=slug)
-    posts_list = group.posts.all().order_by('-pub_date')
-    paginator = Paginator(posts_list, 10)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
+    post_list = group.posts.all().order_by('-pub_date')
+    page_obj = paginate_page(request, post_list)
     context = {
         'group': group,
         'page_obj': page_obj,
@@ -32,11 +34,9 @@ def group_posts(request, slug):
 
 def profile(request, username):
     user = User.objects.get(username=username)
-    user_posts_list = Post.objects.filter(author=user)
+    post_list = Post.objects.filter(author=user)
     count_posts = user.posts.count()
-    paginator = Paginator(user_posts_list, 10)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
+    page_obj = paginate_page(request, post_list)
     context = {
         'user': user,
         'page_obj': page_obj,
