@@ -19,7 +19,7 @@
         </div>
         <div class="card-body">
           {% if is_edit %}
-            <form method="post" action="{{ post_url }}">
+            <div method="post" action="{{ post_url }}">
           {% else %}
             <form method="post" action="{% url 'posts:post_create' %}">
           {% endif %}
